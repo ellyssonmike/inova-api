@@ -8,4 +8,8 @@ export class ConfigService {
   get API_PORT(): number {
     return Number(this.service.get<number>('API_PORT', 3000));
   }
+
+  get DATABASE_URL(): string {
+    return this.service.get<string>('DATABASE_URL', '');
+  }
 }
