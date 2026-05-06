@@ -1,8 +1,12 @@
 {
   "compilerOptions": {
+		"baseUrl": "./",
     "paths": {
 			"@app/*": [
-				"src/*"
+				"src/app/*"
+			],
+			"@api/*": [
+				"src/api/*"
 			],
 			"@config/*": [
 				"src/config/*"
@@ -14,7 +18,7 @@
 				"src/infra/common/errors/*"
 			],
 			"@database/*": [
-				"src/database/*"
+				"src/infra/database/*"
 			],
 			"@decorators/*":[
 				"src/decorators/*"
