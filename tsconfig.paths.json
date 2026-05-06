@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "paths": {
+			"@app/*": [
+				"src/*"
+			],
+			"@infra/*": [
+				"src/infra/*"
+			],
+			"@errors/*": [
+				"src/infra/common/errors/*"
+			],
+			"@database/*": [
+				"src/database/*"
+			],
+			"@decorators/*":[
+				"src/decorators/*"
+			],
+			"@common/*": [
+				"src/common/*"
+			],
+		}
+  }
+}
