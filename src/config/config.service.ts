@@ -6,6 +6,6 @@ export class ConfigService {
   constructor(private readonly service: NestConfigService) {}
 
   get API_PORT(): number {
-    return this.service.get<number>('API_PORT', 3000);
+    return Number(this.service.get<number>('API_PORT', 3000));
   }
 }
