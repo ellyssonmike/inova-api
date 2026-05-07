@@ -10,7 +10,7 @@ export function IsValidPagination(validationOptions?: ValidationOptions) {
       options: validationOptions,
       validator: {
         validate(value) {
-          return value.paginated();
+          return value.isPaginated();
         },
         defaultMessage() {
           return (

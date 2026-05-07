@@ -1,4 +1,5 @@
 import { IsEnum, IsOptional, Min, ValidateIf } from 'class-validator';
+import { BadRequestError } from '@infra/common/errors/bad-request.error';
 import { IsValidPagination } from '@infra/decorators/validation/is-valid-pagination.decorator';
 import { ParseInteger } from '@infra/decorators/validation/parse-integer.decorator';
 import { ValidateOrderBy } from '@infra/decorators/validation/validate-order-by.decorator';
@@ -36,12 +37,12 @@ export abstract class ListBase {
 
   @IsOptional()
   @ParseInteger()
-  @Min(1)
+  @Min(1, { message: 'A página mínima é 1' })
   private page?: number;
 
   @IsOptional()
   @ParseInteger()
-  @Min(1)
+  @Min(1, { message: 'O limite mínimo de resultados retornados é 1' })
   private limit?: number;
 
   @IsOptional()
@@ -103,5 +104,22 @@ export class PaginationResult<T> {
     }
 
     this.data = data;
+    this.validate();
+  }
+
+  validate() {
+    if (this.pageNumber > this.totalPages) {
+      throw new BadRequestError({
+        module: 'Pagination',
+        message: `Página inválida. A página escolhida deve estar entre 1 e ${this.totalPages}`,
+        code: 'P.IN-01',
+        details: {
+          totalRecords: this.totalRecords,
+          totalPages: this.totalPages,
+          pageNumber: this.pageNumber,
+          pageSize: this.pageSize,
+        },
+      });
+    }
   }
 }
