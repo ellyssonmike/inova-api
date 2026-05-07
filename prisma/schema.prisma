@@ -8,12 +8,19 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(uuid())
-  name        String
-  email       String   @unique
-  password    String
-  accessToken String?  @unique
-  lastLogin   DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String      @id @default(uuid())
+  name          String
+  email         String      @unique
+  password      String
+  accessToken   String?     @unique
+  lastLoginAt   DateTime?
+  status        UserStatus  @default(active)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+enum UserStatus {
+  active
+  inactive
+  suspended
 }
