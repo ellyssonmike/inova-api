@@ -3,7 +3,7 @@ import { IsDate, IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
 import { ListBase } from '@infra/base/interfaces/pagination';
 import { ParseDate } from '@infra/decorators/validation/parse-date.decorator';
 import { Pagination } from '@infra/decorators/pagination-options.decorator';
-import { UserStatus } from 'prisma/runtime/enums';
+import { UserStatus } from '@database/enums';
 
 @Pagination({
   orderFields: ['id', 'name', 'email', 'status', 'createdAt', 'updatedAt'],

@@ -1,4 +1,4 @@
-import { UserStatus } from 'prisma/runtime/enums';
+import { UserStatus } from '@database/enums';
 
 export interface ICreateUserDto {
   name: string;

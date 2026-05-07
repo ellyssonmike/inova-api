@@ -1,5 +1,5 @@
 import { BaseEntity } from '@infra/base/entity';
-import { UserStatus } from 'prisma/runtime/enums';
+import { UserStatus } from '@database/enums';
 
 export class UserEntity extends BaseEntity {
   public name: string;
