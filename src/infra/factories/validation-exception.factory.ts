@@ -1,19 +1,16 @@
-import { UnprocessableEntityException } from '@nestjs/common';
+import { HttpStatus, UnprocessableEntityException } from '@nestjs/common';
 import { ValidationError } from 'class-validator';
-
-interface ValidationErrorReason {
-  property: string;
-  messages: string[];
-}
+import { ValidationErrorReason } from '@infra/common/errors/interfaces/errors.interfaces';
 
 export const ValidationExceptionFactory = (
   validationErrors: ValidationError[] = [],
+  property?: string,
 ) => {
   const errors: ValidationErrorReason[] = [];
 
   const buildNestedErrors = (
     error: ValidationError,
-    parentProperty: string,
+    parentProperty?: string,
   ) => {
     const property = parentProperty
       ? `${parentProperty}.${error.property}`
@@ -45,24 +42,25 @@ export const ValidationExceptionFactory = (
   };
 
   validationErrors.forEach((error) => {
-    buildNestedErrors(error, '');
+    buildNestedErrors(error, property);
   });
 
   return new UnprocessableEntityException({
-    name: 'Validation Error',
+    name: 'ValidationException',
     module: getErrorTargetName(validationErrors),
-    code: 'IN.REQ-VAL.E-0001',
+    code: 'IN.REQ-VAL.ERR',
     message:
       'Não foi possível validar os dados da requisição. Verifique os campos informados e tente novamente.',
+    statusCode: HttpStatus.UNPROCESSABLE_ENTITY,
     errors,
   });
 };
 
-const getErrorTargetName = (errors: ValidationError[]): string => {
+const getErrorTargetName = (errors: ValidationError[]) => {
   const error = errors[0];
   if (error.children && error.children.length > 0) {
     return getErrorTargetName(error.children);
   }
 
-  return error.target?.constructor.name ?? 'ExceptionError';
+  return error.target?.constructor.name;
 };

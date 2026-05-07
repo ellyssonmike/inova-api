@@ -6,7 +6,6 @@ import { PaginationPipe } from '@infra/pipes/pagination.pipe';
 import { ConfigService } from '@config/config.service';
 import { ValidationExceptionFactory } from './infra/factories/validation-exception.factory';
 import { ApplicationExceptionFilter } from './infra/filters/application-exception-filter';
-import { ValidationExceptionFilter } from './infra/filters/validation-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -32,7 +31,6 @@ async function bootstrap() {
   );
 
   app.useGlobalFilters(new ApplicationExceptionFilter());
-  app.useGlobalFilters(new ValidationExceptionFilter());
 
   await app.listen(config.API_PORT);
 }

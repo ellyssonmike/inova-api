@@ -26,6 +26,7 @@ export default tseslint.config(
   },
   {
     rules: {
+      "prettier/prettier": ["error", { endOfLine: "auto" }],
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
@@ -33,7 +34,14 @@ export default tseslint.config(
       '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/no-unsafe-return': 'off',
       '@typescript-eslint/no-unsafe-call': 'off',
-      "prettier/prettier": ["error", { endOfLine: "auto" }],
+      '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/no-redundant-type-constituents': 'off',
+      "@typescript-eslint/no-unused-vars": [
+        "error", {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_",
+        },
+      ],
     },
   },
 );
