@@ -18,19 +18,25 @@ export class SessionRepository {
     { email, accessToken, refreshToken, expiresAt }: ICreateSessionDto,
     select: Prisma.SessionSelect = sessionSelector(),
   ) {
-    const session = await this.prisma.session.create({
-      data: {
-        expiresAt,
-        accessToken,
-        refreshToken,
-        user: {
-          connect: {
-            email,
+    const [session] = await this.prisma.$transaction([
+      this.prisma.session.create({
+        data: {
+          expiresAt,
+          accessToken,
+          refreshToken,
+          user: {
+            connect: {
+              email,
+            },
           },
         },
-      },
-      select,
-    });
+        select,
+      }),
+      this.prisma.user.update({
+        where: { email },
+        data: { lastLoginAt: new Date() },
+      }),
+    ]);
 
     return SessionEntity.create(session);
   }
