@@ -115,6 +115,17 @@ export class UserRepository {
     });
   }
 
+  async upsert(attributes: ICreateUserDto) {
+    const user = await this.prisma.user.upsert({
+      where: { email: attributes.email },
+      create: attributes,
+      update: attributes,
+      select: userSelector(),
+    });
+
+    return UserEntity.create(user);
+  }
+
   async update(id: string, attributes: IUpdateUserDto) {
     const user = await this.prisma.user.update({
       where: { id },
