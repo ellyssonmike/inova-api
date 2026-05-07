@@ -9,6 +9,10 @@ export class PaginationPipe implements PipeTransform {
 
     const config = Reflect.getMetadata(PAGINATION_OPTIONS_KEY, dtoClass);
 
+    if (!config) {
+      return value;
+    }
+
     return {
       ...value,
       orderBy: value.orderBy || config?.defaultValues?.orderField || 'id',
