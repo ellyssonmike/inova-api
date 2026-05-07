@@ -1,13 +1,29 @@
 import { ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common';
-import { ApplicationError } from '@errors/application-error';
+import { HttpExceptionError } from '@infra/common/errors/http-exception.error';
 import { Response } from 'express';
 
-@Catch(ApplicationError)
+@Catch(HttpExceptionError)
 export class ApplicationExceptionFilter implements ExceptionFilter {
-  catch(exception: ApplicationError, host: ArgumentsHost) {
+  catch(exception: HttpExceptionError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
-    return response.status(exception.statusCode).json(exception);
+    const {
+      name: _name,
+      module: _module,
+      code: _code,
+      message: _message,
+      status: _status,
+      ...ex
+    } = exception;
+
+    return response.status(exception.status).json({
+      name: exception.name,
+      module: exception.module,
+      code: exception.code,
+      message: exception.message,
+      status: exception.status,
+      ...ex,
+    });
   }
 }
