@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/infra/database/prisma/runtime"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserStatus {
+  active
+  inactive
+  suspended
+}
+
+model User {
+  id            String      @id @default(uuid())
+  name          String
+  email         String      @unique
+  password      String
+  lastLoginAt   DateTime?
+  status        UserStatus  @default(active)
+  sessions      Session[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@map("users")
+  @@index([status], name: "user_status_index")
+  @@index([createdAt], name: "user_created_at_index")
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  accessToken  String   @unique
+  refreshToken String?  @unique
+  expiresAt    DateTime @db.Timestamp(6)
+  user         User     @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  userId       String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("sessions")
+  @@index([userId], name: "session_user_id_index")
+  @@index([expiresAt], name: "session_expires_at_index")
+  @@index([createdAt], name: "session_created_at_index")
+}

@@ -1,24 +1,14 @@
 {
   "compilerOptions": {
+		"baseUrl": "./",
     "paths": {
-			"@app/*": [
-				"src/*"
-			],
-			"@infra/*": [
-				"src/infra/*"
-			],
-			"@errors/*": [
-				"src/infra/common/errors/*"
-			],
-			"@database/*": [
-				"src/database/*"
-			],
-			"@decorators/*":[
-				"src/decorators/*"
-			],
-			"@common/*": [
-				"src/common/*"
-			],
+			"@app/*": ["src/app/*"],
+			"@api/*": ["src/api/*"],
+			"@core/*": ["src/core/*"],
+			"@config/*": ["src/config/*"],
+			"@infra/*": ["src/infra/*"],
+			"@errors/*": ["src/infra/common/errors/*"],
+			"@database/*": ["src/infra/database/prisma/runtime/*"],
 		}
   }
 }
