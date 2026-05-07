@@ -1,6 +1,8 @@
+import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { PaginationPipe } from '@infra/pipes/pagination.pipe';
 import { ConfigService } from '@config/config.service';
 import { ValidationExceptionFactory } from './infra/factories/validation-exception.factory';
 import { ApplicationExceptionFilter } from './infra/filters/application-exception-filter';
@@ -19,6 +21,7 @@ async function bootstrap() {
   });
 
   app.useGlobalPipes(
+    new PaginationPipe(),
     new ValidationPipe({
       transform: true,
       whitelist: true,
