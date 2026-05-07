@@ -51,7 +51,7 @@ export const ValidationExceptionFactory = (
     code: 'IN.REQ-VAL.ERR',
     message:
       'Não foi possível validar os dados da requisição. Verifique os campos informados e tente novamente.',
-    statusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+    status: HttpStatus.UNPROCESSABLE_ENTITY,
     errors,
   });
 };
