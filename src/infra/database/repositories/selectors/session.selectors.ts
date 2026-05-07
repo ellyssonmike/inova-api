@@ -1,4 +1,4 @@
-import { Prisma } from 'prisma/runtime/client';
+import { Prisma } from '@database/client';
 
 export const sessionSelector = () =>
   ({

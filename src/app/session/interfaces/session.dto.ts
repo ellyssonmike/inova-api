@@ -1,4 +1,4 @@
-import { Session, User } from 'prisma/runtime/client';
+import { Session, User } from '@database/client';
 import { ISessionResponse } from '@infra/database/repositories/selectors/session.selectors';
 
 export type IActiveSession = ISessionResponse;

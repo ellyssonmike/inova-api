@@ -7,7 +7,7 @@ import {
   IBaseFindOneOptions,
   IBaseFindUniqueOptions,
 } from '@infra/base/interfaces/options';
-import { Prisma } from 'prisma/runtime/client';
+import { Prisma } from '@database/client';
 
 export type IFindSessionWhereInput = IBaseWhereInput<Prisma.SessionWhereInput>;
 export type IFindSessionWhereUniqueInput =

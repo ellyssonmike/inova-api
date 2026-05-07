@@ -1,9 +1,9 @@
-import { ISessionResponse } from '@/infra/database/prisma/repositories/selectors/session.selector';
+import { SessionEntity } from '@infra/domain/entities/session.entity';
 
 export declare global {
   namespace Express {
     interface Request {
-      session: ISessionResponse;
+      session: SessionEntity;
     }
   }
 }

@@ -1,4 +1,4 @@
-import { PrismaClient as DefaultPrismaClient } from 'prisma/runtime/client';
+import { PrismaClient as DefaultPrismaClient } from '@database/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 
 import { findManyAndCountExtension } from './extensions/find-many-and-count.extension';

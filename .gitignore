@@ -2,7 +2,7 @@
 /dist
 /node_modules
 /build
-/prisma/runtime
+/src/infra/database/prisma/runtime
 
 # Logs
 logs

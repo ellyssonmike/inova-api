@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from 'prisma/runtime/client';
+import { Prisma } from '@database/client';
 import { PrismaService } from '@infra/database/prisma/prisma.service';
 import { ICreateSessionDto } from '@app/session/dtos/create-session.dto';
 import {
@@ -8,10 +8,7 @@ import {
   IFindUniqueSessionOptions,
 } from '@infra/database/interfaces/commands/session.commands';
 import { SessionEntity } from '@infra/domain/entities/session.entity';
-import {
-  ISessionResponse,
-  sessionSelector,
-} from './selectors/session.selectors';
+import { sessionSelector } from './selectors/session.selectors';
 
 @Injectable()
 export class SessionRepository {
@@ -21,19 +18,25 @@ export class SessionRepository {
     { email, accessToken, refreshToken, expiresAt }: ICreateSessionDto,
     select: Prisma.SessionSelect = sessionSelector(),
   ) {
-    const session = await this.prisma.session.create({
-      data: {
-        expiresAt,
-        accessToken,
-        refreshToken,
-        user: {
-          connect: {
-            email,
+    const [session] = await this.prisma.$transaction([
+      this.prisma.session.create({
+        data: {
+          expiresAt,
+          accessToken,
+          refreshToken,
+          user: {
+            connect: {
+              email,
+            },
           },
         },
-      },
-      select,
-    });
+        select,
+      }),
+      this.prisma.user.update({
+        where: { email },
+        data: { lastLoginAt: new Date() },
+      }),
+    ]);
 
     return SessionEntity.create(session);
   }
@@ -53,16 +56,14 @@ export class SessionRepository {
   async findOneLast({
     where,
     select = sessionSelector(),
-  }: IFindSessionOptions): Promise<ISessionResponse> {
-    const session = await PrismaService.withResponse<ISessionResponse>(
-      this.prisma.session.findFirst({
-        where,
-        select,
-        orderBy: {
-          createdAt: 'desc',
-        },
-      }),
-    );
+  }: IFindSessionOptions) {
+    const session = await this.prisma.session.findFirst({
+      where,
+      select,
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
 
     return SessionEntity.create(session);
   }
