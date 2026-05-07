@@ -8,10 +8,7 @@ import {
   IFindUniqueSessionOptions,
 } from '@infra/database/interfaces/commands/session.commands';
 import { SessionEntity } from '@infra/domain/entities/session.entity';
-import {
-  ISessionResponse,
-  sessionSelector,
-} from './selectors/session.selectors';
+import { sessionSelector } from './selectors/session.selectors';
 
 @Injectable()
 export class SessionRepository {
@@ -53,16 +50,14 @@ export class SessionRepository {
   async findOneLast({
     where,
     select = sessionSelector(),
-  }: IFindSessionOptions): Promise<ISessionResponse> {
-    const session = await PrismaService.withResponse<ISessionResponse>(
-      this.prisma.session.findFirst({
-        where,
-        select,
-        orderBy: {
-          createdAt: 'desc',
-        },
-      }),
-    );
+  }: IFindSessionOptions) {
+    const session = await this.prisma.session.findFirst({
+      where,
+      select,
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
 
     return SessionEntity.create(session);
   }
