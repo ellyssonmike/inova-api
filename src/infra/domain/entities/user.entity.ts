@@ -40,7 +40,7 @@ export class UserEntity extends BaseEntity {
   public lastLoginAt: Date;
 
   @ApiProperty({
-    type: Array<UserSessionEntity>,
+    type: UserSessionEntity,
     description: 'Sessões ativas do usuário',
   })
   @Type(() => UserSessionEntity)
