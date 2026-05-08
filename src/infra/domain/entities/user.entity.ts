@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { BaseEntity } from '@infra/base/entity';
 import { UserStatus } from '@database/enums';
 
@@ -39,7 +39,7 @@ export class UserEntity extends BaseEntity {
   @ApiProperty({ type: Date, description: 'Data do último login realizado' })
   public lastLoginAt: Date;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     type: UserSessionEntity,
     description: 'Sessões ativas do usuário',
   })
