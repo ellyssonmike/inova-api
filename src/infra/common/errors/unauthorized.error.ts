@@ -1,27 +1,18 @@
 import { HttpStatus } from '@nestjs/common';
 import { ApplicationError } from './application.error';
+import { IBaseErrorOptions } from './interfaces/errors.interfaces';
 
-interface IUnauthorizedErrorOptions {
-  module: string;
-  message: string;
-  code: string;
-  status?: number;
+interface IUnauthorizedErrorOptions extends IBaseErrorOptions {
   logout?: boolean;
-  details?: any;
 }
 
 export class UnauthorizedError extends ApplicationError {
-  public name: string = UnauthorizedError.name;
-  public logout?: boolean;
+  static readonly status: HttpStatus = HttpStatus.UNAUTHORIZED;
+  public readonly logout?: boolean;
+
   constructor(options: IUnauthorizedErrorOptions) {
-    super({
-      module: options?.module,
-      code: options?.code,
-      message: options.message,
-      status: options?.status ?? HttpStatus.UNAUTHORIZED,
-    });
+    super(options);
 
     this.logout = options?.logout;
-    this.details = options?.details;
   }
 }
