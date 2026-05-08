@@ -1,4 +1,4 @@
-import { Global, Module } from '@nestjs/common';
+import { Global, Logger, Module } from '@nestjs/common';
 import { ConfigModule as GlobalConfigModule } from '@nestjs/config';
 import { ConfigService } from './config.service';
 
@@ -9,7 +9,7 @@ import { ConfigService } from './config.service';
       isGlobal: true,
     }),
   ],
-  providers: [ConfigService],
+  providers: [Logger, ConfigService],
   exports: [ConfigService],
 })
 export class ConfigModule {}
