@@ -200,4 +200,4 @@ export function PaginationResultOf<T>(classRef: Type<T>) {
 }
 
 export const Paginated = <T>(type: Type<T>): Type<PaginationResult<T>> =>
-  class extends PaginationResultOf(type) {};
+  class PaginationResponse extends PaginationResultOf(type) {};
