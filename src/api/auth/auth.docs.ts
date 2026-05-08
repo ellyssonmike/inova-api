@@ -1,11 +1,11 @@
 import { SessionExpiredError } from '@app/session/errors/session-expired.error';
-import { ControllerDoc } from '@docs/decorators/docs.decorator';
 import { BadRequestError } from '@infra/common/errors/bad-request.error';
 import { UnauthorizedError } from '@infra/common/errors/unauthorized.error';
 import { SessionEntity } from '@infra/domain/entities/session.entity';
+import { ControllerSchema } from '@docs';
 
 export class AuthDocs {
-  static login(): ControllerDoc {
+  static login(): ControllerSchema {
     return {
       summary: 'Efetuar login',
       description: 'Autentica um usuário no sistema por meio de email e senha',
@@ -14,7 +14,7 @@ export class AuthDocs {
         {
           name: 'UserNotFound',
           type: BadRequestError,
-          example: {
+          data: {
             module: 'Auth',
             code: 'S.ALS.01',
             message: 'Usuário ou senha inválidos',
@@ -23,7 +23,7 @@ export class AuthDocs {
         {
           name: 'SuspendedUser',
           type: UnauthorizedError,
-          example: {
+          data: {
             module: 'Auth',
             code: 'S.ALS.02',
             message: 'Usuário suspenso',
@@ -32,7 +32,7 @@ export class AuthDocs {
         {
           name: 'InactiveUser',
           type: UnauthorizedError,
-          example: {
+          data: {
             module: 'Auth',
             code: 'S.ALS.03',
             message: 'Usuário desativado',
@@ -41,7 +41,7 @@ export class AuthDocs {
         {
           name: 'InvalidPassword',
           type: BadRequestError,
-          example: {
+          data: {
             module: 'Auth',
             code: 'S.ALS.04',
             message: 'Usuário ou senha inválidos',
@@ -50,7 +50,7 @@ export class AuthDocs {
         {
           name: 'UnknownError',
           type: BadRequestError,
-          example: {
+          data: {
             module: 'Auth',
             code: 'S.ALS.05',
             message: 'Usuário ou senha inválidos',
@@ -60,7 +60,7 @@ export class AuthDocs {
     };
   }
 
-  static refresh(): ControllerDoc {
+  static refresh(): ControllerSchema {
     return {
       summary: 'Atualizar token de acesso',
       description:
@@ -70,7 +70,7 @@ export class AuthDocs {
         {
           name: 'SessionNotFound',
           type: UnauthorizedError,
-          example: {
+          data: {
             module: 'Auth',
             code: 'S.ARS.01',
             message: 'Sessão inválida.',
@@ -80,7 +80,7 @@ export class AuthDocs {
         {
           name: 'SessionMismatch',
           type: UnauthorizedError,
-          example: {
+          data: {
             module: 'Auth',
             code: 'S.ARS.02',
             message: 'Sessão inválida.',
@@ -90,7 +90,7 @@ export class AuthDocs {
         {
           name: 'SuspendedUser',
           type: UnauthorizedError,
-          example: {
+          data: {
             module: 'Auth',
             code: 'S.ARS.03',
             message: 'Usuário suspenso.',
@@ -100,7 +100,7 @@ export class AuthDocs {
         {
           name: 'InactiveUser',
           type: UnauthorizedError,
-          example: {
+          data: {
             module: 'Auth',
             code: 'S.ARS.04',
             message: 'Usuário desativado.',
@@ -110,7 +110,7 @@ export class AuthDocs {
         {
           name: 'SessionExpired',
           type: SessionExpiredError,
-          example: {
+          data: {
             module: 'Auth',
             code: 'S.ARS.05',
             message: 'Sessão expirada.',

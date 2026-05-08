@@ -3,7 +3,7 @@ import { AuthLoginService } from '@app/auth/services/login.service';
 import { AuthLoginRequestDto } from '../dtos/auth-login.dto';
 import { AuthDocs } from '../auth.docs';
 import { ApiTags } from '@nestjs/swagger';
-import { Docs } from '@docs/decorators/docs.decorator';
+import { Docs } from '@docs';
 
 @ApiTags('Autenticação')
 @Controller('/auth')
@@ -13,7 +13,7 @@ export class AuthLoginController {
   @Post('/login')
   @HttpCode(HttpStatus.OK)
   @Docs(AuthDocs.login())
-  async handle(@Body() data: AuthLoginRequestDto) {
+  async login(@Body() data: AuthLoginRequestDto) {
     return this.authLogin.execute(data);
   }
 }

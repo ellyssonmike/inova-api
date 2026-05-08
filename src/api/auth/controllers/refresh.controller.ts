@@ -3,7 +3,7 @@ import { AuthRefreshService } from '@app/auth/services/refresh.service';
 import { AuthRefreshDto } from '@api/auth/dtos/auth-refresh.dto';
 import { AuthDocs } from '../auth.docs';
 import { ApiTags } from '@nestjs/swagger';
-import { Docs } from '@docs/decorators/docs.decorator';
+import { Docs } from '@docs';
 
 @ApiTags('Autenticação')
 @Controller('/auth')
@@ -13,7 +13,7 @@ export class AuthRefreshController {
   @Post('/refresh')
   @HttpCode(HttpStatus.CREATED)
   @Docs(AuthDocs.refresh())
-  async handle(@Body() data: AuthRefreshDto) {
+  async refresh(@Body() data: AuthRefreshDto) {
     return this.authRefresh.execute(data);
   }
 }

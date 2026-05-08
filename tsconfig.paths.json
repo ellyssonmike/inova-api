@@ -4,6 +4,7 @@
     "paths": {
 			"@app/*": ["src/app/*"],
 			"@api/*": ["src/api/*"],
+			"@docs": ["src/docs/"],
 			"@docs/*": ["src/docs/*"],
 			"@core/*": ["src/core/*"],
 			"@config/*": ["src/config/*"],

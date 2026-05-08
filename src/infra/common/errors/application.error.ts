@@ -6,8 +6,8 @@ import {
   ValidationErrorReason,
 } from './interfaces/errors.interfaces';
 import { exceptionValidator } from './exception/exception-validator';
-import { SwaggerResponse } from '@docs/decorators/swagger-response.decorator';
 import { ApiInternalServerErrorResponse } from '@nestjs/swagger';
+import { SwaggerResponse } from '@docs';
 
 type Err = Error | ApplicationError | ValidationErrorReason;
 interface IApplicationErrorOptions<

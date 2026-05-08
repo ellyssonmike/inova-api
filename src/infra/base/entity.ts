@@ -1,6 +1,6 @@
 import { ApiOkResponse, ApiProperty } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
-import { SwaggerResponse } from '@docs/decorators/swagger-response.decorator';
+import { SwaggerResponse } from '@docs';
 
 type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];

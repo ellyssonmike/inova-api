@@ -5,6 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { PaginationPipe } from '@infra/pipes/pagination.pipe';
 import { ConfigService } from '@config/config.service';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { DocsBuilderService } from '@docs/services/docs-builder.service';
 import { ValidationExceptionFactory } from './infra/factories/validation-exception.factory';
 import { ApplicationExceptionFilter } from './infra/filters/application-exception-filter';
 import { BasichAuthAuthorizer } from './docs/basic-auth.authorizer';
@@ -48,6 +49,9 @@ async function bootstrap() {
       }),
     );
 
+    const swaggerBuilder = app.get(DocsBuilderService);
+    swaggerBuilder.execute();
+
     const swaggerConfigs = new DocumentBuilder()
       .setTitle('InovaAPI')
       .setDescription(config.SERVICE_DESCRIPTION)
@@ -63,6 +67,7 @@ async function bootstrap() {
         description: 'JWT Authorization Token',
       })
       .build();
+
     const document = SwaggerModule.createDocument(app, swaggerConfigs);
     SwaggerModule.setup('/docs', app, document);
   }

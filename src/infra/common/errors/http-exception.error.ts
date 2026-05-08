@@ -4,8 +4,8 @@ import {
   ApiProperty,
   ApiPropertyOptional,
 } from '@nestjs/swagger';
-import { SwaggerResponse } from '@docs/decorators/swagger-response.decorator';
 import { IBaseErrorOptions } from './interfaces/errors.interfaces';
+import { SwaggerResponse } from '@docs';
 
 @SwaggerResponse(ApiInternalServerErrorResponse)
 export class HttpExceptionError extends Error {

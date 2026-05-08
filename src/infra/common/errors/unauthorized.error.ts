@@ -1,8 +1,8 @@
 import { HttpStatus } from '@nestjs/common';
 import { ApplicationError } from './application.error';
-import { SwaggerResponse } from '@docs/decorators/swagger-response.decorator';
 import { ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { IBaseErrorOptions } from './interfaces/errors.interfaces';
+import { SwaggerResponse } from '@docs';
 
 interface IUnauthorizedErrorOptions extends IBaseErrorOptions {
   logout?: boolean;
