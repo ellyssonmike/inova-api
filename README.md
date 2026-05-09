@@ -1,28 +1,81 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 # Apresentação
 Esta é uma aplicação em [Nestjs](https://docs.nestjs.com/) criada para um teste técnico no qual me foi designada a criação de um **CRUD** simples, mas fui além. Decidi expor minhas habilidades construindo uma aplicação simples, mas bastante robusta, tirando proveito de muitas funcionalidades e arquiteturas possíveis que o [Nestjs](https://docs.nestjs.com/) tem a oferecer. O intuito desta aplicação é demonstrar os meus conhecimentos e comprometimento com a qualidade e manutenabilidade do código, ofecerendo uma aplicação escalável, documentada e com bons padrões de código.
+
+# Índice
+
+- [Estrutura da aplicação](#estrutura-da-aplicação)
+- [Funcionalidades](#funcionalidades)
+- [Setup](#setup-da-aplicação)
+- [Variáveis de ambiente](#variáveis-de-ambiente)
+- [Rodando a aplicação](#rodando-a-aplicação)
+- [Docker](#rodar-com-o-docker)
+- [Migrações](#migrações-do-banco-de-dados)
+- [CLI](#cli)
+- [Documentação](#documentação-no-swagger)
+- [Seeds](#seed)
+- [Autenticação](#acessando-a-aplicação)
+- [Finalização](#finalização)
+
+# Estrutura da aplicação
+```text
+├── prisma
+│   ├── migrations
+│   └── schema.prisma
+├── prisma.config.ts
+└── src
+    ├── api
+    │   ├── auth
+    │   ├── interfaces
+    │   └── user
+    ├── app
+    │   ├── auth
+    │   ├── session
+    │   └── user
+    ├── app.controller.ts
+    ├── app.docs.ts
+    ├── app.module.ts
+    ├── app.service.ts
+    ├── cli
+    │   ├── commands
+    │   ├── console.module.ts
+    │   ├── data
+    │   └── options
+    ├── config
+    │   ├── config.module.ts
+    │   └── config.service.ts
+    ├── core
+    │   └── manifest.ts
+    ├── docs
+    │   ├── decorators
+    │   ├── docs.interfaces.ts
+    │   ├── docs.metadata.ts
+    │   ├── docs.module.ts
+    │   ├── helpers
+    │   ├── index.ts
+    │   └── services
+    ├── infra
+    │   ├── base
+    │   ├── common
+    │   ├── database
+    │   ├── decorators
+    │   ├── domain
+    │   ├── factories
+    │   ├── filters
+    │   ├── pipes
+    │   └── types
+    └── main.ts
+```
+
+# Principais funcionalidades
+- Arquitetura modular
+- Separação de responsabilidades
+- Utilização de princípios SOLID
+- Arquitetura pensada em framework
+- Geração automática de documentação no Swagger
+- Paginação genérica totalmente tipada
+- Extensão de client Prisma para maior abstração de queries
+- Decorators customizados
+- CLI
 
 # Setup da aplicação
 Neste guia, vou mostrar o passo a passo para configurar e executar corretamente a aplicação, trazendo configurações essenciais e explicações sobre como funcionam algumas funcionalidades e acessos.
@@ -350,18 +403,19 @@ Para ter acesso à todos os endpoints disponíveis, você pode utilizar o `Swagg
 
 Você também conseguirá visualizar quais são os filtros e dados de entrada e saída em cada endpoint, assim como cada erro que pode ser retornado em cada um deles.
 
-# Finalização
-Espero que esta documentação possa ter sido útil
+## Sistema de documentação automática
+Construí essa aplicação pensando em manutenabilidade e DX, com isso construí um DSL como um sistema próprio de documentação automática baseada em decorators e metadata reflection, onde conseguimos inferir comportamentos de forma dinâmica e reutilizável.
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Funcionalidades:
+- Inferência automática de responses de sucesso e erro
+- Múltiplos exemplos por status HTTP exibindo todos os erros reais que podem ocorrer na aplicação em cada endpoint
+- Paginação genérica totalmente tipada
+- Integração com middleware de autenticação, proporcionando respostas padrão para endpoints autorizados
+- Geração dinâmica baseada em metadata
+- Reutilização de schemas e DTOs
+- Criação de decorators customizados (@Docs, @Authenticated, @Paginated)
+- Discovery automático de métodos decorados integrados ao Swagger
+- Engine de documentação reutilizável
 
 ## License
 
