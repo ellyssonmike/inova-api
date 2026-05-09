@@ -1,9 +1,8 @@
-import { HttpStatus } from '@nestjs/common';
-import { ApplicationError } from './application.error';
 import { ApiUnprocessableEntityResponse } from '@nestjs/swagger';
+import { HttpStatus, UnprocessableEntityException } from '@nestjs/common';
 import { SwaggerResponse } from '@docs';
 
 @SwaggerResponse(ApiUnprocessableEntityResponse)
-export class UnprocessableEntityError extends ApplicationError {
+export class ValidationError extends UnprocessableEntityException {
   static readonly status: HttpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
 }

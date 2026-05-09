@@ -1,5 +1,6 @@
-import { HttpStatus, UnprocessableEntityException } from '@nestjs/common';
+import { HttpStatus } from '@nestjs/common';
 import { ValidationError } from 'class-validator';
+import { ValidationError as ValidationErrorException } from '@infra/common/errors/validation.error';
 import { ValidationErrorReason } from '@infra/common/errors/interfaces/errors.interfaces';
 
 export const ValidationExceptionFactory = (
@@ -45,8 +46,8 @@ export const ValidationExceptionFactory = (
     buildNestedErrors(error, property);
   });
 
-  return new UnprocessableEntityException({
-    name: 'ValidationException',
+  return new ValidationErrorException({
+    name: 'ValidationError',
     module: getErrorTargetName(validationErrors),
     code: 'IN.REQ-VAL.ERR',
     message:
