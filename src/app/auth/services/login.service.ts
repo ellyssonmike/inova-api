@@ -27,19 +27,19 @@ export class AuthLoginService {
         throw new BadRequestError({
           module: 'Auth',
           code: 'S.ALS.01',
-          message: 'Usuário ou senha inválidos.',
+          message: 'Usuário ou senha inválidos',
         });
       } else if (user.isSuspended()) {
         throw new UnauthorizedError({
           module: 'Auth',
           code: 'S.ALS.02',
-          message: 'Usuário suspenso.',
+          message: 'Usuário suspenso',
         });
       } else if (!user.isActive()) {
         throw new UnauthorizedError({
           module: 'Auth',
           code: 'S.ALS.03',
-          message: 'Usuário desativado.',
+          message: 'Usuário desativado',
         });
       }
 
@@ -57,7 +57,7 @@ export class AuthLoginService {
         throw new BadRequestError({
           module: 'Auth',
           code: 'S.ALS.04',
-          message: 'Usuário ou senha inválidos.',
+          message: 'Usuário ou senha inválidos',
         });
       }
 
@@ -81,7 +81,7 @@ export class AuthLoginService {
         throw new BadRequestError({
           module: 'Auth',
           code: 'S.ALS.05',
-          message: 'Usuário ou senha inválidos.',
+          message: 'Usuário ou senha inválidos',
         });
       }
 

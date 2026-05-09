@@ -1,24 +1,9 @@
 import { HttpStatus } from '@nestjs/common';
 import { ApplicationError } from './application.error';
+import { ApiForbiddenResponse } from '@nestjs/swagger';
+import { SwaggerResponse } from '@docs';
 
-interface IForbiddenErrorOptions {
-  module: string;
-  message: string;
-  code: string;
-  status?: number;
-  details?: any;
-}
-
+@SwaggerResponse(ApiForbiddenResponse)
 export class ForbiddenError extends ApplicationError {
-  public name: string = ForbiddenError.name;
-  constructor(options: IForbiddenErrorOptions) {
-    super({
-      module: options?.module,
-      code: options?.code,
-      message: options.message,
-      status: options?.status ?? HttpStatus.FORBIDDEN,
-    });
-
-    this.details = options?.details;
-  }
+  static readonly status: HttpStatus = HttpStatus.FORBIDDEN;
 }

@@ -1,17 +1,9 @@
 import { HttpStatus } from '@nestjs/common';
 import { ApplicationError } from './application.error';
+import { ApiConflictResponse } from '@nestjs/swagger';
+import { SwaggerResponse } from '@docs';
 
-interface ConflictErrorOptions {
-  module: string;
-  message: string;
-  code: string;
-  status?: number;
-  details?: any;
-}
-
+@SwaggerResponse(ApiConflictResponse)
 export class ConflictError extends ApplicationError {
-  public name: string = ConflictError.name;
-  constructor({ status, ...options }: ConflictErrorOptions) {
-    super({ ...options, status: status ?? HttpStatus.CONFLICT });
-  }
+  static readonly status: HttpStatus = HttpStatus.CONFLICT;
 }
