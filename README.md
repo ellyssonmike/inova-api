@@ -4,7 +4,7 @@ Esta é uma aplicação em [Nestjs](https://docs.nestjs.com/) criada para um tes
 # Índice
 
 - [Estrutura da aplicação](#estrutura-da-aplicação)
-- [Funcionalidades](#funcionalidades)
+- [Funcionalidades](#principais-funcionalidades)
 - [Setup](#setup-da-aplicação)
 - [Variáveis de ambiente](#variáveis-de-ambiente)
 - [Rodando a aplicação](#rodando-a-aplicação)
@@ -14,7 +14,6 @@ Esta é uma aplicação em [Nestjs](https://docs.nestjs.com/) criada para um tes
 - [Documentação](#documentação-no-swagger)
 - [Seeds](#seed)
 - [Autenticação](#acessando-a-aplicação)
-- [Finalização](#finalização)
 
 # Estrutura da aplicação
 ```text
