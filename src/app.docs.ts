@@ -13,6 +13,7 @@ export class AppDocs {
     return {
       summary: 'Status da aplicação',
       description: 'Retorna o status e informações da aplicação',
+      validated: false,
       responses: [AppRootResponse],
     };
   }

@@ -21,6 +21,7 @@ export class CreateUserService {
         module: 'Users',
         message: 'Já existe um usuário cadastrado com este email',
         code: 'US.CR.01',
+        details: { property: 'email' },
       });
     }
 

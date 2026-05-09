@@ -12,6 +12,7 @@ export type DecoratorFunction = (
 export interface ControllerSchema {
   summary: string;
   description: string;
+  validated: boolean;
   responses: Response[];
 }
 

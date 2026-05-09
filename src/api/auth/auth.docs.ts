@@ -9,6 +9,7 @@ export class AuthDocs {
     return {
       summary: 'Efetuar login',
       description: 'Autentica um usuário no sistema por meio de email e senha',
+      validated: true,
       responses: [
         SessionEntity,
         {
@@ -65,6 +66,7 @@ export class AuthDocs {
       summary: 'Atualizar token de acesso',
       description:
         'Atualiza o token de acesso do usuário utilizando o RefreshToken',
+      validated: true,
       responses: [
         SessionEntity,
         {

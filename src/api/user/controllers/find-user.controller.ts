@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { FindUserService } from '@app/user/services/find-user.service';
 import { RequestBaseParams } from '@api/interfaces/request-params.interfaces';
 import { UserDocs } from '../user.docs';
-import { Docs } from '@docs';
+import { Authenticated, Docs } from '@docs';
 
 @ApiTags('Usuários')
 @ApiBearerAuth()
@@ -13,6 +13,7 @@ export class FindUserController {
 
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
+  @Authenticated()
   @Docs(UserDocs.find())
   async find(@Param() { id }: RequestBaseParams) {
     return this.findUser.execute(id);

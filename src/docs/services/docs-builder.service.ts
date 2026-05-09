@@ -1,4 +1,10 @@
-import { applyDecorators, Injectable, Type } from '@nestjs/common';
+import {
+  applyDecorators,
+  HttpStatus,
+  Injectable,
+  Type,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { HttpExceptionError } from '@infra/common/errors/http-exception.error';
 import {
   ContentExampleValue,
@@ -14,8 +20,9 @@ import { ModelPropertiesAccessor } from '@nestjs/swagger/dist/services/model-pro
 import { DocsDiscoveryService } from './docs-discovery.service';
 import { DECORATORS } from '@nestjs/swagger/dist/constants';
 import { Paginated } from '@infra/base/interfaces/pagination';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiNoContentResponse, ApiOperation } from '@nestjs/swagger';
 import { authenticatedErrorResponses } from '@docs/authenticated-error.responses';
+import { validationErrorResponses } from '@docs/validation-error.responses';
 
 @Injectable()
 export class DocsBuilderService {
@@ -29,17 +36,23 @@ export class DocsBuilderService {
     for (const [prototype, methodName, descriptor] of methods) {
       const config = this.discovery.getConfig(prototype[methodName]);
       const { schema, authenticated, paginated } = config;
-      const { summary, description, responses } = schema;
+      const { summary, description, validated, responses } = schema;
 
+      const statusCode = this.discovery.getHttpCode(prototype[methodName]);
       const successDecorators = this.resolveSuccessDecorators(
+        statusCode,
         responses,
         paginated,
       );
 
+      const baseResponses = validated
+        ? [...responses, ...validationErrorResponses]
+        : responses;
+
       const errorDecorators = this.resolveErrorDecorators(
         authenticated
-          ? [...authenticatedErrorResponses, ...responses]
-          : responses,
+          ? [...baseResponses, ...authenticatedErrorResponses]
+          : baseResponses,
       );
 
       applyDecorators(
@@ -51,17 +64,24 @@ export class DocsBuilderService {
   }
 
   private isErrorResponse(type: Type<unknown>) {
-    return type.prototype instanceof HttpExceptionError;
+    return (
+      type.prototype instanceof HttpExceptionError ||
+      type.prototype instanceof UnprocessableEntityException
+    );
   }
 
-  private resolveSuccessDecorators(responses: Response[], paginated?: boolean) {
+  private resolveSuccessDecorators(
+    statusCode: HttpStatus,
+    responses: Response[],
+    paginated?: boolean,
+  ) {
     const successResponses = responses.filter((response) => {
       const type = this.resolveResponseType(response);
 
       return !this.isErrorResponse(type);
     });
 
-    return successResponses.map((response) => {
+    const decorators = successResponses.map((response) => {
       const type = this.resolveResponseType(response);
       const decorator = this.getSwaggerDecorator(type);
 
@@ -70,6 +90,12 @@ export class DocsBuilderService {
         isArray: Array.isArray(response),
       });
     });
+
+    if (this.isStatusNoContent(statusCode)) {
+      return [ApiNoContentResponse()];
+    }
+
+    return decorators;
   }
 
   private resolveErrorDecorators(responses: Response[]) {
@@ -229,5 +255,9 @@ export class DocsBuilderService {
     example.status = (type as ErrorClass).status;
 
     return example;
+  }
+
+  private isStatusNoContent(statusCode: HttpStatus) {
+    return statusCode === HttpStatus.NO_CONTENT;
   }
 }
