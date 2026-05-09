@@ -22,7 +22,7 @@ export class EnsureAuthMiddleware {
         throw new UnauthorizedError({
           module: 'Auth',
           code: 'M.EA.01',
-          message: 'Usuário não autenticado.',
+          message: 'Usuário não autenticado',
           logout: true,
         });
       }
@@ -33,21 +33,21 @@ export class EnsureAuthMiddleware {
         throw new UnauthorizedError({
           module: 'Auth',
           code: 'M.EA.02',
-          message: 'Sessão inválida.',
+          message: 'Sessão inválida',
           logout: true,
         });
       } else if (session.user.isSuspended()) {
         throw new UnauthorizedError({
           module: 'Auth',
           code: 'M.EA.03',
-          message: 'Usuário suspenso.',
+          message: 'Usuário suspenso',
           logout: true,
         });
       } else if (!session.user.isActive()) {
         throw new UnauthorizedError({
           module: 'Auth',
           code: 'M.EA.04',
-          message: 'Usuário desativado.',
+          message: 'Usuário desativado',
           logout: true,
         });
       }
@@ -57,14 +57,14 @@ export class EnsureAuthMiddleware {
         throw new UnauthorizedError({
           module: 'Auth',
           code: 'M.EA.05',
-          message: 'Sessão inválida.',
+          message: 'Sessão inválida',
           logout: true,
         });
       } else if (new Date(exp * 1000) < new Date()) {
         throw new SessionExpiredError({
           module: 'Auth',
           code: 'M.EA.06',
-          message: 'Sessão expirada.',
+          message: 'Sessão expirada',
           expiredAt: new Date(exp * 1000),
           logout: true,
         });
@@ -79,7 +79,7 @@ export class EnsureAuthMiddleware {
         const err = new UnauthorizedError({
           module: 'Auth',
           code: 'M.EA.07',
-          message: 'Sessão inválida.',
+          message: 'Sessão inválida',
           logout: true,
         });
 
@@ -89,7 +89,7 @@ export class EnsureAuthMiddleware {
         const err = new UnauthorizedError({
           module: 'Auth',
           code: 'M.EA.08',
-          message: 'Sessão expirada.',
+          message: 'Sessão expirada',
           logout: true,
         });
 
@@ -99,7 +99,7 @@ export class EnsureAuthMiddleware {
         const err = new UnauthorizedError({
           module: 'Auth',
           code: 'M.EA.09',
-          message: 'Erro interno.',
+          message: 'Erro interno',
         });
 
         err.addError(error);
